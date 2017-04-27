@@ -21,14 +21,10 @@ module.exports = function(req, res) {
         if (err) {
           return res.status(422).send({ error: 'error with twilio' })
         }
-
+        
         admin.database().ref(`users/${phone}`)
-          .update({ code: code, codeValid: true }, () => {
-            res.send({ success: true })
-          })
+          .update({ code: code, codeValid: true }, () => res.send({ success: true }))
       })
     })
-    .catch(error => {
-      res.status(422).send({ error: 'user not found' })
-    })
+    .catch(error => res.status(422).send({ error: 'user not found' }))
 }
